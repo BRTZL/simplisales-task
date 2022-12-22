@@ -11,10 +11,15 @@ import AppScreens from '~/screens/app'
 
 export type AppStackParams = {
   BottomTab: undefined
+
+  ProductDetail: {
+    id: string
+  }
 }
 
 export type AppTabParams = {
   Home: undefined
+  Orders: undefined
   Profile: undefined
 }
 
@@ -23,6 +28,7 @@ const AppBottom = createBottomTabNavigator<AppTabParams>()
 
 const AppBottomTabIcons = {
   Home: ['home', 'home-outline'],
+  Orders: ['list', 'list-outline'],
   Profile: ['person', 'person-outline'],
 }
 
@@ -88,6 +94,11 @@ function AppBottomTab({}: AppBottomTabProps) {
         name="Home"
         component={AppScreens.HomeScreen}
         options={{ title: 'Home' }}
+      />
+      <AppBottom.Screen
+        name="Orders"
+        component={AppScreens.OrdersScreen}
+        options={{ title: 'Orders' }}
       />
       <AppBottom.Screen
         name="Profile"

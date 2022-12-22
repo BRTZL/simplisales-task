@@ -1,6 +1,6 @@
-import { useQuery, gql } from '@apollo/client'
+import { gql } from '~/__generated__'
 
-const GET_USER = gql`
+export const GET_USER = gql(`
   query GetUser {
     user {
       firebaseUserUID
@@ -30,8 +30,4 @@ const GET_USER = gql`
       showAllPricesIncludingVat
     }
   }
-`
-
-export function useGetUser() {
-  return useQuery(GET_USER)
-}
+`)

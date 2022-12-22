@@ -1,3 +1,4 @@
+import { useMutation } from '@apollo/client'
 import { StackScreenProps } from '@react-navigation/stack'
 import React from 'react'
 import { Controller, useForm } from 'react-hook-form'
@@ -5,7 +6,7 @@ import { KeyboardAvoidingView, StyleSheet, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Button, CustomLoader, IoniconsIcon, TextInput } from '~/components'
 import colors from '~/constants/colors'
-import { useLogin } from '~/hooks/graphql/auth'
+import { LOGIN } from '~/graphql/auth'
 import { AuthStackParams } from '~/navigation'
 import { useAuthContext } from '~/providers/AuthProvider'
 import { showErrorSnackbar } from '~/utils/snackbar_helpers'
@@ -20,7 +21,7 @@ type LoginForm = {
 export default function LoginScreen({}: Props) {
   const insets = useSafeAreaInsets()
   const { login: authLogin } = useAuthContext()
-  const [login, { loading }] = useLogin()
+  const [login, { loading }] = useMutation(LOGIN)
 
   const {
     control,
@@ -37,7 +38,9 @@ export default function LoginScreen({}: Props) {
     await login({
       variables: { email, password },
       onCompleted(data) {
-        authLogin(data.login)
+        if (data.login) {
+          authLogin(data.login)
+        }
       },
       onError(error) {
         showErrorSnackbar({
