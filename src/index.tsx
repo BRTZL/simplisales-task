@@ -7,13 +7,10 @@ import {
 import { setContext } from '@apollo/client/link/context'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { NavigationContainer } from '@react-navigation/native'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import React from 'react'
 import { StatusBar } from 'react-native'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import Providers from '~/providers'
-
-const queryClient = new QueryClient()
 
 const httpLink = new HttpLink({
   uri: 'https://simplisaleshw.cotunnel.com/graphql',
@@ -60,11 +57,9 @@ export default function App() {
     <SafeAreaProvider>
       <StatusBar barStyle="dark-content" />
       <NavigationContainer>
-        <QueryClientProvider client={queryClient}>
-          <ApolloProvider client={apolloClient}>
-            <Providers />
-          </ApolloProvider>
-        </QueryClientProvider>
+        <ApolloProvider client={apolloClient}>
+          <Providers />
+        </ApolloProvider>
       </NavigationContainer>
     </SafeAreaProvider>
   )
